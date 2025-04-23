@@ -682,4 +682,23 @@ class ComposerConstraintsHelperTest extends TestCase
         }
         return implode('.', $versionParts);
     }
+
+
+    public function testMyWork()
+    {
+        $constraint = '2.*';
+        // ^2.2 [any version from 2.2.0 - 2.9999999
+        // 2.* [any version from 2.0.0 - 2.999999.999999]
+        // >=2.2 [same as ^2.2], also <=
+        // >2.2 [same as ^2.2, except doesn't match 2.2.0], also <
+        // 2.*|3.x [matches 2.000 - 2.9999 *or* 3.0.0 - 3.9999]
+        // 2.* || 4.x [matches either 2.* or 4.x but not both]
+
+        $helper = new ComposerConstraintsHelper();
+        self::assertTrue($helper->versionSatisfies($constraint, "2.0.0"), '1');
+        self::assertTrue($helper->versionSatisfies($constraint, "2.2.0"), '<=2.2');
+        self::assertFalse($helper->versionSatisfies($constraint, "2.2.0"), '<2.2');
+        self::assertFalse($helper->versionSatisfies($constraint, "1.0.0"), '3');
+        self::assertFalse($helper->versionSatisfies($constraint, "3.0.0"), '4');
+    }
 }

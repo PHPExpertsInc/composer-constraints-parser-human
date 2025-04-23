@@ -2,9 +2,8 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          bootstrap="./vendor/autoload.php"
          colors="true"
-         testdox="true"
-         stopOnError="true"
-         stopOnFailure="true"
+         stopOnError="false"
+         stopOnFailure="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd">
   <coverage processUncoveredFiles="true">
     <include>
